@@ -1,0 +1,146 @@
+.register-section {
+  background-color: #fff1da; /* Fondo claro */
+  color: #831847; /* Letras */
+  font-family: 'Segoe UI', sans-serif;
+  min-height: 100vh;
+}
+
+.register-title {
+  font-size: 2rem !important; /* Reducido */
+  color: #831847 !important;
+  font-weight: bold;
+  margin-bottom: 0.5rem !important; /* Reducido */
+}
+
+.register-subtitle {
+  font-size: 1.2rem !important; /* Reducido */
+  color: #831847 !important;
+  opacity: 0.9;
+  margin-bottom: 1rem !important; /* Reducido */
+}
+
+.register-box {
+  background-color: #ffffff !important;
+  border: 2px solid #831847 !important; /* Bordes más delgados */
+  border-radius: 12px !important; /* Ligeramente más pequeño */
+  padding: 1.5rem !important; /* Reducido */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important; /* Sombra más ligera */
+  max-width: 380px !important; /* Ligeramente más pequeño */
+  margin: 0 auto !important;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem !important; /* Reducido */
+}
+
+.register-label {
+  color: #831847 !important;
+  font-weight: bold;
+  font-size: 1rem !important; /* Reducido */
+}
+
+.register-input {
+  border-color: #831847 !important;
+  border-radius: 6px !important; /* Más pequeño */
+  box-shadow: none !important;
+  font-size: 1rem !important; /* Reducido */
+  padding: 0.5rem !important; /* Reducido */
+  width: 100% !important;
+}
+
+.register-input:focus {
+  border-color: #ff4d4d !important;
+  outline: none !important;
+}
+
+.register-submit-btn {
+  background-color: #ff4d4d !important;
+  color: #fff !important;
+  border-radius: 6px !important; /* Más pequeño */
+  padding: 0.5rem 1rem !important; /* Reducido */
+  font-weight: bold !important;
+  font-size: 1.1rem !important; /* Reducido */
+  transition: background-color 0.3s ease !important;
+}
+
+.register-submit-btn:hover {
+  background-color: #e03c3c !important;
+}
+
+.register-submit-btn:disabled {
+  background-color: #cccccc !important;
+  cursor: not-allowed !important;
+}
+
+.login-prompt {
+  font-size: 1rem !important; /* Reducido */
+  color: #831847 !important;
+}
+
+.login-link {
+  color: #ff4d4d !important;
+  font-weight: 500 !important;
+  text-decoration: none !important;
+  transition: color 0.3s ease !important;
+}
+
+.login-link:hover {
+  color: #e03c3c !important;
+  text-decoration: none !important;
+}
+
+.captcha-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.captcha-box {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem !important; /* Reducido */
+  background-color: #fff1da;
+  padding: 0.25rem 0.75rem !important; /* Reducido */
+  border-radius: 4px !important; /* Más pequeño */
+  font-size: 1rem !important; /* Reducido */
+  color: #831847 !important;
+}
+
+.captcha-box input[type="checkbox"] {
+  width: 16px !important; /* Reducido */
+  height: 16px !important; /* Reducido */
+  cursor: pointer;
+}
+
+.password-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem !important; /* Reducido */
+  background-color: #fff1da;
+  padding: 0.25rem 0.75rem !important; /* Reducido */
+  border-radius: 4px !important; /* Más pequeño */
+  font-size: 1rem !important; /* Reducido */
+  color: #831847 !important;
+}
+
+.password-toggle input[type="checkbox"] {
+  width: 16px !important; /* Reducido */
+  height: 16px !important; /* Reducido */
+  cursor: pointer;
+}
+
+.ml-2 {
+  margin-left: 0.25rem !important; /* Reducido */
+}
+
+.register-error {
+  font-size: 0.8rem !important; /* Reducido */
+  margin-top: 0.25rem !important;
+}
+
+.register-success {
+  font-size: 0.8rem !important; /* Reducido */
+  margin-bottom: 0.25rem !important; /* Reducido */
+}

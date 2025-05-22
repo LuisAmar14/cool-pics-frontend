@@ -1,0 +1,127 @@
+.edit-profile-section {
+  background-color: #fff1da;
+  color: #831847;
+  font-family: 'Segoe UI', sans-serif;
+  min-height: 100vh;
+}
+
+.edit-profile-title {
+  font-size: 2.5rem !important;
+  color: #831847 !important;
+  font-weight: bold;
+  margin-bottom: 1rem !important;
+}
+
+.edit-profile-subtitle {
+  font-size: 1.5rem !important;
+  color: #831847 !important;
+  opacity: 0.9;
+}
+
+.edit-profile-box {
+  background-color: #ffffff !important;
+  border: 3px solid #831847 !important;
+  border-radius: 16px !important;
+  padding: 2rem !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1) !important;
+  max-width: 650px !important; /* Aumentado de 500px a 650px */
+  margin: 0 auto !important;
+}
+
+.edit-profile-content {
+  text-align: left;
+}
+
+.option-selector {
+  display: flex;
+  justify-content: center;
+  gap: 15px; /* Reducido de 20px a 15px para ahorrar espacio */
+  margin-bottom: 2rem;
+  flex-wrap: wrap; /* Permite que los botones se ajusten en pantallas pequeñas */
+}
+
+.option-btn {
+  background-color: #831847 !important;
+  color: #fff !important;
+  padding: 0.6rem 1.2rem !important; /* Reducido de 0.75rem 1.5rem */
+  border: none !important;
+  border-radius: 8px !important;
+  font-size: 1.1rem !important; /* Reducido de 1.2rem */
+  cursor: pointer !important;
+  transition: background-color 0.3s ease !important;
+  white-space: nowrap; /* Evita que el texto de los botones se divida */
+}
+
+.option-btn:hover {
+  background-color: #6b143a !important;
+}
+
+.option-btn.is-active {
+  background-color: #ff4d4d !important;
+  color: #fff !important;
+}
+
+.option-btn.is-active:hover {
+  background-color: #e03c3c !important;
+}
+
+.edit-profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.edit-profile-label {
+  color: #831847 !important;
+  font-weight: bold;
+  font-size: 1.2rem !important;
+}
+
+.edit-profile-input {
+  border-color: #831847 !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+  font-size: 1.2rem !important;
+  padding: 0.75rem !important;
+  width: 100% !important;
+}
+
+.edit-profile-input:focus {
+  border-color: #ff4d4d !important;
+  outline: none !important;
+}
+
+.edit-profile-submit-btn {
+  background-color: #ff4d4d !important;
+  color: #fff !important;
+  border-radius: 8px !important;
+  padding: 0.75rem 1.5rem !important;
+  font-weight: bold !important;
+  transition: background-color 0.3s ease !important;
+}
+
+.edit-profile-submit-btn:hover {
+  background-color: #e03c3c !important;
+}
+
+.edit-profile-error {
+  font-size: 1.2rem !important;
+  margin-top: 0.5rem !important;
+}
+
+.edit-profile-success {
+  font-size: 1.2rem !important;
+  margin-top: 0.5rem !important;
+}
+
+/* Ajuste responsive para pantallas pequeñas */
+@media (max-width: 768px) {
+  .edit-profile-box {
+    max-width: 90% !important; /* Ajusta el ancho en pantallas pequeñas */
+  }
+
+  .option-btn {
+    padding: 0.5rem 1rem !important;
+    font-size: 1rem !important;
+  }
+}

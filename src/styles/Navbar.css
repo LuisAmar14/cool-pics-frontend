@@ -1,0 +1,141 @@
+.custom-navbar {
+  background: linear-gradient(90deg, #831847, #ff4d4d);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.navbar-item {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  color: #fff1da !important;
+  position: relative;
+  transition: background-color 0.3s ease;
+  padding: 0.5rem 1rem; /* Ajuste de padding para compactar */
+}
+
+.navbar-item:hover {
+  background-color: rgba(255, 241, 218, 0.1);
+  color: #fff1da !important;
+}
+
+.navbar-item::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: #fff1da;
+  transition: width 0.3s ease, left 0.3s ease;
+}
+
+.navbar-item:hover::after {
+  width: 70%;
+  left: 15%;
+}
+
+.navbar-burger span {
+  background-color: #fff1da !important;
+  transition: transform 0.3s ease;
+}
+
+.navbar-burger.is-active span:nth-child(1) {
+  transform: rotate(45deg) translate(4px, 4px);
+}
+
+.navbar-burger.is-active span:nth-child(2) {
+  opacity: 0;
+}
+
+.navbar-burger.is-active span:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* Estilo para logout */
+.custom-logout {
+  background: transparent;
+  border: 2px solid #fff1da;
+  color: #fff1da !important;
+  border-radius: 20px; /* Reducido para compactar */
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 0.9rem; /* Reducido para ahorrar espacio */
+  padding: 0.25rem 0.75rem; /* Ajustado para compactar */
+  display: flex;
+  align-items: center;
+  gap: 0.25rem; /* Espacio entre ícono y texto */
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.custom-logout:hover {
+  background-color: #fff1da !important;
+  color: #831847 !important;
+  transform: scale(1.03);
+}
+
+.custom-logout .icon {
+  margin: 0; /* Eliminar márgenes innecesarios */
+}
+
+/* Responsive navbar behavior */
+@media (max-width: 768px) {
+  .navbar-menu.is-active {
+    background: linear-gradient(135deg, #831847, #ff4d4d);
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 250px; /* Reducido de 280px para ahorrar espacio */
+    padding: 60px 15px; /* Reducido */
+    transform: translateX(0);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem; /* Reducido */
+    box-shadow: -4px 0 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .navbar-start,
+  .navbar-end {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar-end .navbar-item {
+    width: 100%; /* Asegurar que los items ocupen todo el ancho */
+    text-align: left;
+  }
+
+  .custom-logout {
+    width: 100%; /* Asegurar que el botón logout sea visible en mobile */
+    justify-content: center;
+  }
+}
+
+@media (min-width: 769px) {
+  .navbar-menu {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background: transparent;
+    width: 100%;
+    position: static;
+    transform: none !important;
+    height: auto;
+    box-shadow: none;
+  }
+
+  .navbar-start,
+  .navbar-end {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem; /* Reducido */
+  }
+
+  .navbar-end .navbar-item:last-child {
+    margin-left: 0.5rem; /* Ajuste para que logout no se desborde */
+  }
+}

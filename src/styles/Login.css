@@ -1,0 +1,95 @@
+.login-section {
+  background-color: #fff1da; /* Fondo claro */
+  color: #831847; /* Letras */
+  font-family: 'Segoe UI', sans-serif;
+  min-height: 100vh;
+}
+
+.login-title {
+  font-size: 2.5rem !important;
+  color: #831847 !important;
+  font-weight: bold;
+  margin-bottom: 1rem !important;
+}
+
+.login-subtitle {
+  font-size: 1.5rem !important;
+  color: #831847 !important;
+  opacity: 0.9;
+}
+
+.login-box {
+  background-color: #ffffff !important;
+  border: 3px solid #831847 !important;
+  border-radius: 16px !important;
+  padding: 2rem !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1) !important;
+  max-width: 400px !important;
+  margin: 0 auto !important;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.login-label {
+  color: #831847 !important;
+  font-weight: bold;
+  font-size: 1.2rem !important;
+}
+
+.login-input {
+  border-color: #831847 !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+  font-size: 1.2rem !important;
+  padding: 0.75rem !important;
+  width: 100% !important;
+}
+
+.login-input:focus {
+  border-color: #ff4d4d !important;
+  outline: none !important;
+}
+
+.login-submit-btn {
+  background-color: #ff4d4d !important;
+  color: #fff !important;
+  border-radius: 8px !important;
+  padding: 0.75rem 1.5rem !important;
+  font-weight: bold !important;
+  transition: background-color 0.3s ease !important;
+}
+
+.login-submit-btn:hover {
+  background-color: #e03c3c !important;
+}
+
+.register-prompt {
+  font-size: 1.2rem !important;
+  color: #831847 !important;
+}
+
+.register-link {
+  color: #ff4d4d !important;
+  font-weight: 500 !important;
+  text-decoration: none !important;
+  transition: color 0.3s ease !important;
+}
+
+.register-link:hover {
+  color: #e03c3c !important;
+  text-decoration: none !important;
+}
+
+.login-error {
+  font-size: 1.2rem !important;
+  margin-top: 0.5rem !important;
+}
+
+.login-success {
+  font-size: 1.2rem !important;
+  margin-top: 0.5rem !important;
+}

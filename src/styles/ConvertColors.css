@@ -1,0 +1,102 @@
+.convert-colors-section {
+  background-color: #fff1da;
+  color: #831847;
+  font-family: 'Segoe UI', sans-serif;
+  min-height: 100vh;
+}
+
+.convert-colors-title {
+  font-size: 2.5rem;
+  color: #831847;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.convert-colors-box {
+  background-color: #ffffff;
+  border: 3px solid #831847;
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.convert-colors-content {
+  text-align: left;
+}
+
+.convert-colors-section-title {
+  font-size: 1.8rem;
+  color: #831847;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.convert-colors-input-group {
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.convert-colors-input {
+  border-color: #831847;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  text-align: center;
+  width: 100px;
+}
+
+.convert-colors-input:focus {
+  border-color: #ff4d4d;
+  outline: none;
+}
+
+.convert-colors-convert-btn {
+  background-color: #ff4d4d;
+  color: #fff;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.convert-colors-convert-btn:hover {
+  background-color: #e03c3c;
+}
+
+.convert-colors-error {
+  font-size: 1.2rem;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+.color-info {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.color-swatch-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.color-swatch {
+  width: 150px;
+  height: 150px;
+  border: 2px solid #831847;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.color-picker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0; /* Oculta visualmente el picker, pero sigue siendo interactivo */
+  cursor: pointer;
+}
