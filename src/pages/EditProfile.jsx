@@ -94,7 +94,7 @@ function EditProfile() {
 
       console.log('Submitting username update with:', { username: formData.username });
       const response = await axios.put(
-        'http://localhost:5000/api/auth/profile',
+        `${import.meta.env.VITE_API_URL}/api/auth/profile`,
         {
           username: formData.username,
         },
@@ -151,7 +151,7 @@ function EditProfile() {
 
       console.log('Submitting password update with:', { password: formData.password });
       const response = await axios.put(
-        'http://localhost:5000/api/auth/profile',
+               `${import.meta.env.VITE_API_URL}/api/auth/profile`,
         {
           password: formData.password,
           confirmPassword: formData.confirmPassword,
