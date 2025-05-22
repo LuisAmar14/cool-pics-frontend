@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import heic2any from 'heic2any'; // <--- Nueva dependencia
 import '../styles/GeneratePalette.css';
 
 function GeneratePalette() {
@@ -15,15 +16,29 @@ function GeneratePalette() {
   const token = sessionStorage.getItem('token');
   const isLoggedIn = !!token;
 
-  const handleImageChange = (e) => {
+  const handleImageChange = async (e) => {
     const file = e.target.files[0];
-    if (file) {
-      const url = URL.createObjectURL(file);
-      setImageUrl(url);
-      setPaletteName('');
-      setError('');
-      setSuccess('');
-      generatePaletteFromImage(url);
+    if (!file) return;
+
+    setPaletteName('');
+    setError('');
+    setSuccess('');
+
+    try {
+      let imageBlob = file;
+
+      // Detectar y convertir HEIC/HEIF
+      if (file.type === 'image/heic' || file.type === 'image/heif' || file.name.endsWith('.heic') || file.name.endsWith('.HEIC')) {
+        const convertedBlob = await heic2any({ blob: file, toType: 'image/jpeg', quality: 0.9 });
+        imageBlob = convertedBlob;
+      }
+
+      const objectURL = URL.createObjectURL(imageBlob);
+      setImageUrl(objectURL);
+      generatePaletteFromImage(objectURL);
+    } catch (err) {
+      console.error('Error al procesar la imagen:', err);
+      setError('No se pudo procesar la imagen. Asegúrate de que sea un formato compatible.');
     }
   };
 
@@ -41,7 +56,6 @@ function GeneratePalette() {
     const max = Math.max(r, g, b);
     const min = Math.min(r, g, b);
     let h, s, l = (max + min) / 2;
-
     if (max === min) {
       h = s = 0;
     } else {
@@ -54,7 +68,6 @@ function GeneratePalette() {
       }
       h *= 60;
     }
-
     return { h: Math.round(h), s: Math.round(s * 100), l: Math.round(l * 100) };
   };
 
@@ -126,7 +139,7 @@ function GeneratePalette() {
       });
 
       const response = await axios.post(
-        'http://localhost:5000/api/palettes',
+        `${import.meta.env.VITE_API_URL}/api/palettes`,
         { colors, palette_name: paletteName },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -152,7 +165,7 @@ function GeneratePalette() {
               <input
                 className="file-input"
                 type="file"
-                accept="image/*"
+                accept="image/*,image/heic,image/heif,image/jpeg,image/raw"
                 onChange={handleImageChange}
                 ref={fileInputRef}
               />
@@ -206,7 +219,7 @@ function GeneratePalette() {
                       ></div>
                     ))}
                   </div>
-                  {isLoggedIn && (
+                  {isLoggedIn ? (
                     <div className="field has-text-left mt-4">
                       <label className="label generate-palette-label">Nombre de la Paleta</label>
                       <div className="control">
@@ -222,8 +235,7 @@ function GeneratePalette() {
                         Guardar
                       </button>
                     </div>
-                  )}
-                  {!isLoggedIn && (
+                  ) : (
                     <p className="generate-palette-login-prompt mt-3">
                       Por favor <Link to="/login" className="generate-palette-login-link">inicia sesión</Link> para guardar la paleta.
                     </p>
