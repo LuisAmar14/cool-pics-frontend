@@ -18,7 +18,7 @@ function SavedColors() {
       }
 
       console.log('Fetching colors...');
-      const response = await axios.get('http://localhost:5000/api/colors', {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/colors`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -40,7 +40,7 @@ function SavedColors() {
   const handleDelete = async (colorId) => {
     try {
       const token = sessionStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/colors/${colorId}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/api/colors/${colorId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
