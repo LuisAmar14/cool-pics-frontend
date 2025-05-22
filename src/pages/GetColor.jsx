@@ -22,12 +22,20 @@ function GetColor() {
     const file = e.target.files[0];
     if (file) {
       const url = URL.createObjectURL(file);
-      setImageUrl(url);
-      setColor({ rgb: '', hex: '', hsl: '' });
-      setColorName('');
-      setError('');
-      setSuccess('');
-      setPixelInfo(null);
+      const testImage = new Image();
+      testImage.onload = () => {
+        setImageUrl(url);
+        setColor({ rgb: '', hex: '', hsl: '' });
+        setColorName('');
+        setError('');
+        setSuccess('');
+        setPixelInfo(null);
+      };
+      testImage.onerror = () => {
+        setError('El formato de imagen no es compatible en este navegador.');
+        URL.revokeObjectURL(url);
+      };
+      testImage.src = url;
     }
   };
 
@@ -90,21 +98,16 @@ function GetColor() {
     const scrollX = container.scrollLeft;
     const scrollY = container.scrollTop;
 
-    // Coordenadas relativas al canvas, ajustadas por desplazamiento
     const x = e.clientX - rect.left + scrollX;
     const y = e.clientY - rect.top + scrollY;
 
-    // Calcular la escala del canvas visual respecto a las dimensiones originales
     const scaleX = img.naturalWidth / rect.width;
     const scaleY = img.naturalHeight / rect.height;
 
-    // Mapear las coordenadas a las dimensiones originales de la imagen
     const mappedX = Math.floor(x * scaleX);
     const mappedY = Math.floor(y * scaleY);
 
-    // Verificar si las coordenadas están dentro de los límites de la imagen
     if (mappedX >= 0 && mappedX < img.naturalWidth && mappedY >= 0 && mappedY < img.naturalHeight) {
-      // Usar un canvas temporal para obtener el color exacto
       const tempCanvas = document.createElement('canvas');
       tempCanvas.width = img.naturalWidth;
       tempCanvas.height = img.naturalHeight;
@@ -115,19 +118,13 @@ function GetColor() {
       const [r, g, b] = pixelData;
       const hex = rgbToHex(r, g, b);
 
-      setPixelInfo({
-        x: e.clientX,
-        y: e.clientY,
-        hex: hex,
-      });
+      setPixelInfo({ x: e.clientX, y: e.clientY, hex });
     } else {
       setPixelInfo(null);
     }
   };
 
-  const handleCanvasMouseLeave = () => {
-    setPixelInfo(null);
-  };
+  const handleCanvasMouseLeave = () => setPixelInfo(null);
 
   const handleColorSelect = () => {
     if (pixelInfo) {
@@ -156,7 +153,7 @@ function GetColor() {
       const hslValues = color.hsl.match(/\d+/g).join(',');
 
       const response = await axios.post(
-        'http://localhost:5000/api/colors',
+        `${import.meta.env.VITE_API_URL}/api/colors`,
         { rgb: rgbValues, hex: color.hex, hsl: hslValues, name: colorName },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -199,7 +196,7 @@ function GetColor() {
               <input
                 className="file-input"
                 type="file"
-                accept="image/*"
+                accept="image/*,image/heic,image/heif"
                 onChange={handleImageChange}
                 ref={fileInputRef}
               />
@@ -224,6 +221,8 @@ function GetColor() {
                   style={{ cursor: 'crosshair', maxWidth: '100%', maxHeight: '400px', display: 'block' }}
                 />
               </div>
+
+              {/* Burbujita con el color */}
               {pixelInfo && (
                 <div
                   className="pixel-info-bubble"
@@ -246,6 +245,7 @@ function GetColor() {
                 </div>
               )}
 
+              {/* Detalles del color */}
               {color.rgb && (
                 <div className="columns is-centered is-vcentered mt-3">
                   <div className="column is-narrow">
