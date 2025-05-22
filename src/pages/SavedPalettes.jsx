@@ -26,7 +26,7 @@ function SavedPalettes() {
       }
 
       console.log('Fetching palettes...');
-      const response = await axios.get('http://localhost:5000/api/palettes', {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/palettes`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -48,7 +48,7 @@ function SavedPalettes() {
   const handleDelete = async (paletteId) => {
     try {
       const token = sessionStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/palettes/${paletteId}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/api/palettes/${paletteId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
