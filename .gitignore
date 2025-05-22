@@ -50,3 +50,4 @@ Thumbs.db
 # Configuraciones locales
 .idea/
 .vscode/
+.vercel
