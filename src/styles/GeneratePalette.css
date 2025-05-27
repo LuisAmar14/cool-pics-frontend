@@ -59,6 +59,8 @@
   color: #fff !important;
   border-radius: 8px !important;
   transition: background-color 0.3s ease !important;
+  padding: 0.75rem 1.5rem !important;
+  margin: 1rem 0 !important;
 }
 
 .generate-palette-reset-btn:hover {
@@ -70,12 +72,17 @@
 }
 
 .generate-palette-color-box {
-  min-height: 120px;
+  min-height: 200px !important; /* Aumentar tamaño */
+  height: 200px !important; /* Altura fija más grande */
   border: 1px solid #831847 !important;
   border-radius: 12px !important;
-  padding: 1rem !important;
+  padding: 1.5rem !important; /* Más espacio interno */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1) !important;
   transition: transform 0.3s ease !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  align-items: flex-start !important; /* Alinear texto a la izquierda */
 }
 
 .generate-palette-color-box:hover {
@@ -84,9 +91,11 @@
 
 .generate-palette-color-text {
   font-size: 1rem !important;
-  margin: 0.3rem 0 !important;
+  margin: 0.5rem 0 !important; /* Más espacio entre líneas */
   letter-spacing: 1px;
   word-spacing: 2px;
+  flex: 1 !important;
+  line-height: 1.4 !important; /* Mejorar legibilidad */
 }
 
 .palette-strip {
