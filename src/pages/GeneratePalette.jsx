@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import heic2any from 'heic2any'; // <--- Nueva dependencia
+import heic2any from 'heic2any';
 import '../styles/GeneratePalette.css';
 
 function GeneratePalette() {
@@ -27,18 +27,27 @@ function GeneratePalette() {
     try {
       let imageBlob = file;
 
-      // Detectar y convertir HEIC/HEIF
-      if (file.type === 'image/heic' || file.type === 'image/heif' || file.name.endsWith('.heic') || file.name.endsWith('.HEIC')) {
-        const convertedBlob = await heic2any({ blob: file, toType: 'image/jpeg', quality: 0.9 });
-        imageBlob = convertedBlob;
+      // Intentar detectar y convertir HEIC/HEIF más robustamente
+      const isHeicOrHeif = file.type === 'image/heic' || file.type === 'image/heif' ||
+                          file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif');
+      if (isHeicOrHeif) {
+        try {
+          const convertedBlob = await heic2any({ blob: file, toType: 'image/jpeg', quality: 0.9 });
+          imageBlob = convertedBlob;
+          console.log('Conversión HEIC/HEIF a JPEG exitosa');
+        } catch (conversionError) {
+          console.error('Error en la conversión HEIC/HEIF:', conversionError);
+          setError('No se pudo convertir el archivo HEIC/HEIF. Intentando con el original.');
+          // Fallback al archivo original si la conversión falla
+        }
       }
 
       const objectURL = URL.createObjectURL(imageBlob);
       setImageUrl(objectURL);
       generatePaletteFromImage(objectURL);
     } catch (err) {
-      console.error('Error al procesar la imagen:', err);
-      setError('No se pudo procesar la imagen. Asegúrate de que sea un formato compatible.');
+      console.error('Error general al procesar la imagen:', err);
+      setError('No se pudo procesar la imagen. Asegúrate de que sea un formato compatible (PNG, JPEG, HEIC/HEIF).');
     }
   };
 
@@ -143,7 +152,6 @@ const generatePaletteFromImage = (url) => {
   img.src = url;
 };
 
-
   const handleSave = async () => {
     setError('');
     setSuccess('');
@@ -185,7 +193,7 @@ const generatePaletteFromImage = (url) => {
               <input
                 className="file-input"
                 type="file"
-                accept="image/*,image/heic,image/heif,image/jpeg,image/raw"
+                accept="image/*,image/heic,image/heif,image/jpeg,image/png"
                 onChange={handleImageChange}
                 ref={fileInputRef}
               />
