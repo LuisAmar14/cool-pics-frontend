@@ -76,53 +76,73 @@ function GeneratePalette() {
 
   const getBrightness = (r, g, b) => 0.299 * r + 0.587 * g + 0.114 * b;
 
-  const generatePaletteFromImage = (url) => {
-    const img = new Image();
-    img.crossOrigin = "Anonymous";
-    img.src = url;
-    img.onload = () => {
-      const canvas = canvasRef.current;
-      const ctx = canvas.getContext('2d');
-      const targetSize = 100;
-      const aspectRatio = img.width / img.height;
-      let newWidth, newHeight;
-      if (aspectRatio > 1) {
-        newWidth = targetSize;
-        newHeight = Math.round(targetSize / aspectRatio);
-      } else {
-        newWidth = Math.round(targetSize * aspectRatio);
-        newHeight = targetSize;
+const generatePaletteFromImage = (url) => {
+  const img = new Image();
+  img.crossOrigin = "Anonymous";
+  img.onload = () => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    const targetSize = 100;
+    const aspectRatio = img.width / img.height;
+    let newWidth, newHeight;
+    if (aspectRatio > 1) {
+      newWidth = targetSize;
+      newHeight = Math.round(targetSize / aspectRatio);
+    } else {
+      newWidth = Math.round(targetSize * aspectRatio);
+      newHeight = targetSize;
+    }
+    canvas.width = newWidth;
+    canvas.height = newHeight;
+    ctx.drawImage(img, 0, 0, newWidth, newHeight);
+
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+    const colorMap = new Map();
+
+    // Convertir a HSL y agrupar
+    for (let i = 0; i < imageData.length; i += 4) {
+      const r = imageData[i];
+      const g = imageData[i + 1];
+      const b = imageData[i + 2];
+      const { h, s, l } = rgbToHsl(r, g, b);
+      const key = `${Math.round(h / 30)},${Math.round(s / 10)},${Math.round(l / 10)}`; // Reducir granularidad
+      if (!colorMap.has(key)) {
+        colorMap.set(key, { count: 0, r: 0, g: 0, b: 0 });
       }
-      canvas.width = newWidth;
-      canvas.height = newHeight;
-      ctx.drawImage(img, 0, 0, newWidth, newHeight);
+      const colorData = colorMap.get(key);
+      colorData.count += 1;
+      colorData.r += r;
+      colorData.g += g;
+      colorData.b += b;
+    }
 
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
-      const colorCounts = {};
-      for (let i = 0; i < imageData.length; i += 4) {
-        const r = imageData[i];
-        const g = imageData[i + 1];
-        const b = imageData[i + 2];
-        const key = `${r},${g},${b}`;
-        colorCounts[key] = (colorCounts[key] || 0) + 1;
-      }
+    // Calcular centroides y ponderar por saturación
+    const clusters = Array.from(colorMap.values()).map(data => ({
+      r: Math.round(data.r / data.count),
+      g: Math.round(data.g / data.count),
+      b: Math.round(data.b / data.count),
+      count: data.count,
+      saliency: data.count * (data.r / 255 + data.g / 255 + data.b / 255) / 3 // Peso simple por brillo
+    }));
 
-      const sortedColors = Object.entries(colorCounts)
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 7)
-        .map(([key]) => key.split(',').map(Number));
+    // Ordenar por saliencia y tomar los 7 más representativos
+    clusters.sort((a, b) => b.saliency - a.saliency);
+    const paletteColors = clusters.slice(0, 7).map(({ r, g, b }) => {
+      const hex = rgbToHex(r, g, b);
+      const { h, s, l } = rgbToHsl(r, g, b);
+      return { rgb: `rgb(${r}, ${g}, ${b})`, hsl: `hsl(${h}, ${s}%, ${l}%)`, hex: hex, hue: h };
+    });
 
-      const paletteColors = sortedColors.map(([r, g, b]) => {
-        const hex = rgbToHex(r, g, b);
-        const { h, s, l } = rgbToHsl(r, g, b);
-        return { rgb: `rgb(${r}, ${g}, ${b})`, hsl: `hsl(${h}, ${s}%, ${l}%)`, hex: hex, hue: h };
-      });
-
-      paletteColors.sort((a, b) => b.hue - a.hue);
-      setPalette(paletteColors);
-      URL.revokeObjectURL(url);
-    };
+    paletteColors.sort((a, b) => b.hue - a.hue); // Ordenar por tono para presentación
+    setPalette(paletteColors);
+    URL.revokeObjectURL(url);
   };
+  img.onerror = () => {
+    setError('Error al cargar la imagen. Verifica el formato o inténtalo de nuevo.');
+  };
+  img.src = url;
+};
+
 
   const handleSave = async () => {
     setError('');
